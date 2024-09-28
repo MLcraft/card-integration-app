@@ -1,0 +1,20 @@
+{
+  "requestId": "12345667",
+  "createDate": "2023-11-11T02:57:10.936Z",
+  "status": "OPEN",
+  "listings": [
+    {
+      "cardId" :  "200",
+      "name" : "Blue Sky",
+      "quantity": 3
+    },
+    {
+      "cardId" :  "201",
+      "name" : "Blue Ocean",
+      "quantity": 1
+    }
+  ],
+  "customerId": "UUID-12345"
+}
+
+

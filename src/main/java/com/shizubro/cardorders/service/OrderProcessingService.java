@@ -3,13 +3,18 @@ package com.shizubro.cardorders.service;
 import com.shizubro.cardorders.dto.CardOrderDto;
 import com.shizubro.cardorders.repository.CardOrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class OrderProcessingService {
 
-    @Autowired
+
     private CardOrderRepository cardOrderRepository;
+
+    @Autowired
+    public void OrderProcessing(CardOrderRepository cardOrderRepository) {
+        this.cardOrderRepository = cardOrderRepository;
+    }
 
     public void load(CardOrderDto cardOrder){
         System.out.println(cardOrder);

@@ -13,4 +13,46 @@ spring:
     sql:
       init:
         schema-locations: classpath:migrations/create_order_table.sql, classpath:migrations/create_listing_table.sql
-
+---
+spring:
+  cloud:
+    function:
+      definition: "cardDataMessage"
+---
+spring:
+  cloud:
+    stream:
+      function:
+        bindings:
+          cardDataMessage-in-0: card-data-message
+      rabbit:
+        bindings:
+          card-data-message:
+            consumer:
+              auto-bind-dlq: true
+              republish-to-dlq: true
+              queue-name-group-only: true
+          card-data-message-out-0:
+            producer:
+              routing-key-expression: headers['X-RoutingKey']
+      binders:
+        local-rabbit:
+          type: rabbit
+          environment:
+            spring:
+              rabbitmq:
+                host: localhost
+                port: 5672
+                username: rabbitadmin
+                password: rabbitpassword
+                virtual-host: mtgmarket_broker
+      bindings:
+        card-data-message:
+          binder: local-rabbit
+          content-type: application/json
+          destination: card-data-message-exchange
+          group: card-data-message-queue
+        card-data-message-out-0:
+          binder: local-rabbit
+          destination: card-data-message-exchange
+          content-type: application/json

@@ -1,5 +1,8 @@
 package com.shizubro.cardorders.queue;
 
+import com.shizubro.cardorders.dto.BulkObjectDto;
+import com.shizubro.cardorders.mapper.Mapper;
+import com.shizubro.cardorders.repository.BulkObjectRepository;
 import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
@@ -13,14 +16,24 @@ import java.util.function.Consumer;
 @Controller
 @Configuration
 public class CardOrderReceiver {
-    public void handle(@NotNull final Message<String> message) {
-        log.info("Consume a message from queue");
+    private final BulkObjectRepository bulkObjectRepository;
+    private final Mapper mapper;
+
+    public CardOrderReceiver(BulkObjectRepository bulkObjectRepository, Mapper mapper) {
+        this.bulkObjectRepository = bulkObjectRepository;
+        this.mapper = mapper;
+    }
+
+    public void handle(@NotNull final Message<BulkObjectDto> message) {
         System.out.println("Consume a message from queue");
         System.out.println(message);
+        System.out.println(message.getPayload().getDownloadUri());
+        System.out.println(this.mapper.bulkObjectToEntity(message.getPayload()));
+//        this.bulkObjectRepository.save();
     }
 
     @Bean
-    public Consumer<Message<String>> cardDataMessage() {
+    public Consumer<Message<BulkObjectDto>> cardDataMessage() {
         return payload -> handle(payload);
     }
 }

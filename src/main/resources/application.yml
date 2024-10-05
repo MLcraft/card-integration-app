@@ -12,7 +12,7 @@ spring:
       console.enabled: true
     sql:
       init:
-        schema-locations: classpath:migrations/create_order_table.sql, classpath:migrations/create_listing_table.sql
+        schema-locations: classpath:migrations/create_order_table.sql, classpath:migrations/create_listing_table.sql, classpath:migrations/create_bulk_object_table.sql
 ---
 spring:
   cloud:

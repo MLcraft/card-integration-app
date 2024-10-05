@@ -1,5 +1,6 @@
 package com.shizubro.cardorders.queue;
 
+import com.shizubro.cardorders.dto.BulkObjectDto;
 import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
@@ -16,11 +17,11 @@ public class CardDataPublisher {
         this.streamBridge = streamBridge;
     }
 
-    public boolean publish(String message) {
+    public boolean publish(BulkObjectDto message) {
         return streamBridge.send(CARD_DATA_PRODUCER_OUT, message);
     }
-    private Message<String> buildMessage(String message) {
-        MessageBuilder<String> builder = MessageBuilder.withPayload(message);
+    private Message<BulkObjectDto> buildMessage(BulkObjectDto message) {
+        MessageBuilder<BulkObjectDto> builder = MessageBuilder.withPayload(message);
         builder.setHeader(ROUTING_KEY_HEADER, ROUTING_KEY_VALUE);
         return builder.build();
     }

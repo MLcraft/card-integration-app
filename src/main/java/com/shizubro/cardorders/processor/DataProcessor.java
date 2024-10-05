@@ -1,6 +1,7 @@
 package com.shizubro.cardorders.processor;
 
-import com.shizubro.cardorders.model.BulkData;
+import com.shizubro.cardorders.dto.BulkDataDto;
+import com.shizubro.cardorders.queue.CardDataPublisher;
 import com.shizubro.cardorders.service.CardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -8,10 +9,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class DataProcessor {
     private CardService cardService;
+    private CardDataPublisher cardDataPublisher;
 
     @Autowired
-    public DataProcessor(CardService cardService) {
+    public DataProcessor(CardService cardService, CardDataPublisher cardDataPublisher) {
         this.cardService = cardService;
+        this.cardDataPublisher = cardDataPublisher;
     }
 
     /*
@@ -34,8 +37,9 @@ public class DataProcessor {
     downloadUri=https://data.scryfall.io/rulings/rulings-20241001210038.json)])
      */
     public void process() {
-        BulkData bulkData = cardService.getBulkData();
+        BulkDataDto bulkDataDto = this.cardService.getBulkData();
         //bulkData.getData().stream().filter()
+        bulkDataDto.getData().forEach(data -> this.cardDataPublisher.publish(data));
         //get list oracle_card download url
         //download data
         //save to db

@@ -1,13 +1,29 @@
 package com.shizubro.cardorders.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+import java.util.UUID;
+
+@Getter
+@Setter
+@Entity
+@Table(name = "bulk_object")
 public class BulkObject {
 
-    private String id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    private Long id;
+
+    @Column(name = "data_id", nullable = false)
+    private UUID dataId;
+
+    @Column(name = "type", nullable = false)
     private String type;
-    @JsonProperty("download_uri")
+
+    @Column(name = "download_uri", nullable = false)
     private String downloadUri;
+
 }

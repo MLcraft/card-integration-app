@@ -1,6 +1,6 @@
 package com.shizubro.cardorders.service;
 
-import com.shizubro.cardorders.model.BulkData;
+import com.shizubro.cardorders.dto.BulkDataDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
@@ -16,13 +16,13 @@ public class CardService {
         this.restClient = restClient;
     }
 
-    public BulkData getBulkData() {
-        BulkData bulkData = restClient
+    public BulkDataDto getBulkData() {
+        BulkDataDto bulkDataDto = restClient
                 .get()
                 .uri("https://api.scryfall.com/bulk-data")
                 .retrieve()
-                .body(BulkData.class);
-        return bulkData;
+                .body(BulkDataDto.class);
+        return bulkDataDto;
     }
 
 }

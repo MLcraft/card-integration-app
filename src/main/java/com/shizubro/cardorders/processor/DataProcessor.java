@@ -1,19 +1,29 @@
 package com.shizubro.cardorders.processor;
 
+import com.alibaba.fastjson2.JSON;
 import com.shizubro.cardorders.dto.BulkDataDto;
+import com.shizubro.cardorders.dto.BulkObjectDto;
+import com.shizubro.cardorders.dto.MagicCard;
 import com.shizubro.cardorders.queue.CardDataPublisher;
-import com.shizubro.cardorders.service.CardService;
+import com.shizubro.cardorders.service.impl.ExternalApiClientService;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
+
 @Component
+@Slf4j
 public class DataProcessor {
-    private CardService cardService;
+    private ExternalApiClientService externalApiClientService;
     private CardDataPublisher cardDataPublisher;
 
     @Autowired
-    public DataProcessor(CardService cardService, CardDataPublisher cardDataPublisher) {
-        this.cardService = cardService;
+    public DataProcessor(ExternalApiClientService externalApiClientService, CardDataPublisher cardDataPublisher) {
+        this.externalApiClientService = externalApiClientService;
         this.cardDataPublisher = cardDataPublisher;
     }
 
@@ -37,11 +47,25 @@ public class DataProcessor {
     downloadUri=https://data.scryfall.io/rulings/rulings-20241001210038.json)])
      */
     public void process() {
-        BulkDataDto bulkDataDto = this.cardService.getBulkData();
-        //bulkData.getData().stream().filter()
-        bulkDataDto.getData().forEach(data -> this.cardDataPublisher.publish(data));
-        //get list oracle_card download url
-        //download data
-        //save to db
+        BulkDataDto bulkDataDto = this.externalApiClientService.getBulkData();
+        for (BulkObjectDto b : bulkDataDto.getData()) {
+            this.cardDataPublisher.publish(b);
+        }
+    }
+
+    public void processOracleCards() {
+
+        //TODO switch to real data from API call
+        String dataFilePath = "/data/oracle-cards-20241005210544.json";
+        try {
+            InputStream input = this.getClass().getResourceAsStream(dataFilePath);
+            String text = IOUtils.toString(input, "UTF-8");
+            List<MagicCard> list = JSON.parseArray(text, MagicCard.class);
+            //TODO publish to queue
+
+
+        } catch (IOException e) {
+            log.warn("The data file is missing");
+        }
     }
 }

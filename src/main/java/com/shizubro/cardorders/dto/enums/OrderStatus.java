@@ -1,4 +1,4 @@
-package com.shizubro.cardorders.enums;
+package com.shizubro.cardorders.dto.enums;
 
 public enum OrderStatus {
     OPEN,

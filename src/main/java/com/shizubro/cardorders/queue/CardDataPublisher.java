@@ -18,11 +18,14 @@ public class CardDataPublisher {
     }
 
     public boolean publish(BulkObjectDto message) {
-        return streamBridge.send(CARD_DATA_PRODUCER_OUT, message);
+        return streamBridge.send(CARD_DATA_PRODUCER_OUT, buildMessage(message));
     }
+
     private Message<BulkObjectDto> buildMessage(BulkObjectDto message) {
+
         MessageBuilder<BulkObjectDto> builder = MessageBuilder.withPayload(message);
         builder.setHeader(ROUTING_KEY_HEADER, ROUTING_KEY_VALUE);
         return builder.build();
+
     }
 }

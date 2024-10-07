@@ -7,3 +7,8 @@ Springboot project using JPA with H2 and Spring Cloud Stream RabbitMQ to fetch d
 ## Tech Stack
 
 **Server:** Java 17, Spring Boot, RabbitMQ, SQL database, JUnit, Mockito
+
+
+## Run the app
+
+mvn spring-boot:run -Dspring-boot.run.profiles=local

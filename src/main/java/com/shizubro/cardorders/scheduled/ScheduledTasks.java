@@ -14,8 +14,13 @@ public class ScheduledTasks {
         this.dataProcessor = dataProcessor;
     }
 
-    @Scheduled(fixedRate = 5000)
+    @Scheduled(fixedRate = 24*60*60*1000)
     public void processData() {
         this.dataProcessor.process();
+    }
+
+    @Scheduled(fixedRate = 24*60*60*1000)
+    public void processOracleCards() {
+        this.dataProcessor.processOracleCards();
     }
 }

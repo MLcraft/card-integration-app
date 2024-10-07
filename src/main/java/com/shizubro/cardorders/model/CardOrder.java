@@ -1,6 +1,6 @@
 package com.shizubro.cardorders.model;
 
-import com.shizubro.cardorders.enums.OrderStatus;
+import com.shizubro.cardorders.dto.enums.OrderStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

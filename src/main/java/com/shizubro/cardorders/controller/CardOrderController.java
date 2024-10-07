@@ -1,8 +1,7 @@
 package com.shizubro.cardorders.controller;
 
 import com.shizubro.cardorders.dto.CardOrderDto;
-import com.shizubro.cardorders.model.CardOrder;
-import com.shizubro.cardorders.service.OrderProcessingService;
+import com.shizubro.cardorders.service.impl.OrderProcessingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;

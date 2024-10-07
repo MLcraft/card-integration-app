@@ -1,6 +1,6 @@
 package com.shizubro.cardorders.dto;
 
-import com.shizubro.cardorders.enums.OrderStatus;
+import com.shizubro.cardorders.dto.enums.OrderStatus;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

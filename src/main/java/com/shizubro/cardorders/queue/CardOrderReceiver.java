@@ -1,10 +1,11 @@
 package com.shizubro.cardorders.queue;
 
+
 import com.shizubro.cardorders.dto.BulkObjectDto;
-import com.shizubro.cardorders.mapper.Mapper;
-import com.shizubro.cardorders.repository.BulkObjectRepository;
+import com.shizubro.cardorders.service.CardService;
 import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.Message;
@@ -16,24 +17,25 @@ import java.util.function.Consumer;
 @Controller
 @Configuration
 public class CardOrderReceiver {
-    private final BulkObjectRepository bulkObjectRepository;
-    private final Mapper mapper;
 
-    public CardOrderReceiver(BulkObjectRepository bulkObjectRepository, Mapper mapper) {
-        this.bulkObjectRepository = bulkObjectRepository;
-        this.mapper = mapper;
+    private final CardService cardService;
+
+    @Autowired
+    public CardOrderReceiver(CardService cardService) {
+        this.cardService = cardService;
     }
 
     public void handle(@NotNull final Message<BulkObjectDto> message) {
-        System.out.println("Consume a message from queue");
-        System.out.println(message);
-        System.out.println(message.getPayload().getDownloadUri());
-        System.out.println(this.mapper.bulkObjectToEntity(message.getPayload()));
-//        this.bulkObjectRepository.save();
+        log.info("Consume a message from queue");
+        cardService.processBulkObject(message.getPayload());
     }
 
     @Bean
     public Consumer<Message<BulkObjectDto>> cardDataMessage() {
         return payload -> handle(payload);
     }
+
+
+    //TODO add one more consumer to consume the MagicCard data
+
 }

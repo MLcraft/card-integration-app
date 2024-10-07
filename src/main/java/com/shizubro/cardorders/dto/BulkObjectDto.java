@@ -11,12 +11,13 @@ import java.util.UUID;
  * DTO for {@link BulkObject}
  */
 @Data
-@AllArgsConstructor
 public class BulkObjectDto {
 
     @JsonProperty("id")
     private UUID dataId;
+
     private String type;
+
     @JsonProperty("download_uri")
     private String downloadUri;
 }

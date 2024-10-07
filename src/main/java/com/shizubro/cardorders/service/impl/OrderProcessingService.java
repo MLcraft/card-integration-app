@@ -1,4 +1,4 @@
-package com.shizubro.cardorders.service;
+package com.shizubro.cardorders.service.impl;
 
 import com.shizubro.cardorders.dto.CardOrderDto;
 import com.shizubro.cardorders.repository.CardOrderRepository;

@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### data file ###
+/resources/data/oracle-cards-20241005210544.json
+/test/resources/oracle-cards-20241005210544.json

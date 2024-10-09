@@ -18,21 +18,14 @@ spring:
 spring:
   cloud:
     function:
-      definition: "cardDataMessage"
+      definition: "scryfallCardDataMessage"
 ---
 spring:
   cloud:
     stream:
-      function:
-        bindings:
-          cardDataMessage-in-0: card-data-message
       rabbit:
         bindings:
-          card-data-message:
-            consumer:
-              auto-bind-dlq: true
-              republish-to-dlq: true
-          card-data-message-out-0:
+          scryfall-card-data-message-out-0:
             producer:
               routing-key-expression: headers['X-RoutingKey']
       binders:
@@ -42,21 +35,15 @@ spring:
             spring:
               rabbitmq:
                 host: localhost
-
-
-
-
                 port: 5672
                 username: rabbitadmin
                 password: rabbitpassword
                 virtual-host: mtgmarket_broker
       bindings:
-        card-data-message:
+        scryfall-card-data-message-out-0:
           binder: local-rabbit
+          destination: scryfall-card-data-message-exchange
           content-type: application/json
-          destination: card-data-message-exchange
-          group: card-data-message-queue
-        card-data-message-out-0:
-          binder: local-rabbit
-          destination: card-data-message-exchange
-          content-type: application/json
+
+server:
+  port: 0

@@ -1,10 +1,9 @@
 package com.shizubro.cardorders.service;
 
-import com.shizubro.cardorders.dto.BulkObjectDto;
-import com.shizubro.cardorders.dto.MagicCard;
+import com.shizubro.cardorders.dto.MagicCardDto;
 
 
 public interface CardService {
-    void processMagicCard(MagicCard mc);
-    void processBulkObject(BulkObjectDto bulkObjectDto);
+    void fetchBulkData();
+    void processMagicCard(MagicCardDto magicCardDto);
 }

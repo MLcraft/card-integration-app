@@ -1,6 +1,6 @@
 package com.shizubro.cardorders.service;
 
-import com.shizubro.cardorders.queue.CardDataPublisher;
+import com.shizubro.cardorders.queue.ScryfallCardDataPublisher;
 import com.shizubro.cardorders.service.impl.ExternalApiClientService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ public class ExternalApiClientServiceTest {
     ExternalApiClientService externalApiClientService;
 
     @Autowired
-    CardDataPublisher cardDataPublisher;
+    ScryfallCardDataPublisher scryfallCardDataPublisher;
 
     @Test
     public void testGetBulkData() {
